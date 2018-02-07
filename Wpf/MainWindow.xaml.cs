@@ -40,6 +40,21 @@ namespace Wpf
             phonesGrid.ItemsSource = reports;
         }
 
+        private void addTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void updateTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void deleteTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -49,12 +64,13 @@ namespace Wpf
         {
 
         }
-
+        //Delete Task list 
         private async void deleteButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync("/api/tasklists/" + txtId.Text);
+                Tasklist td = (Tasklist)phonesGrid.SelectedItem;
+                HttpResponseMessage response = await client.DeleteAsync("/api/tasklists/" + td.Id);
                 response.EnsureSuccessStatusCode(); // Throw on error code.
                 MessageBox.Show("Tasklist Successfully Deleted");
                 phonesGrid.ItemsSource = await GetAllTasklists();
@@ -66,6 +82,7 @@ namespace Wpf
             }
         }
 
+        //Get all task lists from Web Api
         public async Task<IEnumerable<Tasklist>> GetAllTasklists()
         {
             HttpResponseMessage response = await client.GetAsync("/api/tasklists");
@@ -73,7 +90,8 @@ namespace Wpf
             var tasklist = await response.Content.ReadAsAsync<IEnumerable<Tasklist>>();
             return tasklist;
         }
-        
+
+        //Get all tasks from Web Api
         public async Task<IEnumerable<Tasks>> GetAllTasks()
         {
             HttpResponseMessage response = await client.GetAsync("/api/tasks/");
@@ -82,6 +100,7 @@ namespace Wpf
             return tasks;
         }
 
+        //Get all task statuses from Web Api
         public async Task<IEnumerable<TaskStatuses>> GetAllTaskStatusess()
         {
             HttpResponseMessage response = await client.GetAsync("/api/taskstatus/");
@@ -90,6 +109,7 @@ namespace Wpf
             return taskstatus;
         }
 
+        //show all tasks from selected task list
         private async void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridRow td = sender as DataGridRow;
@@ -101,22 +121,6 @@ namespace Wpf
                              where t.TaskListId == tl.Id
                              select new { Name = t.Name, Status = ts.Name };
             TaskGrid.ItemsSource = SelectTask;
-
-            //DataGridTextColumn c1 = new DataGridTextColumn();
-            //c1.Header = "Name";
-            //c1.Binding = new Binding("Name");
-            //c1.Width = 110;
-            //TaskGrid.Columns.Add(c1);
-            //DataGridTextColumn c2 = new DataGridTextColumn();
-            //c2.Header = "Status";
-            //c2.Width = 110;
-            //c2.Binding = new Binding("Status");
-            //TaskGrid.Columns.Add(c2);
-
-            //TaskGrid.Items.Add();
-            //TaskGrid.Items.Add(new Item() { Num = 2, Start = "2012, 12, 15" });
-            //TaskGrid.Items.Add(new Item() { Num = 3, Start = "2012, 8, 1" });
-
         }
      
     }

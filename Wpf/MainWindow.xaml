@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="550" Width="525">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="20 8 20 8" />
@@ -18,20 +18,24 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <DataGrid AutoGenerateColumns="True" x:Name="phonesGrid" Margin="0,0,0.4,124.4">
-        <DataGrid.ItemContainerStyle>
-            <Style TargetType="DataGridRow">
-                <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
-            </Style>
-        </DataGrid.ItemContainerStyle>
+        <DataGrid AutoGenerateColumns="True" x:Name="phonesGrid" Margin="0,0,0.4,314.4">
+            <DataGrid.ItemContainerStyle>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                </Style>
+            </DataGrid.ItemContainerStyle>
         </DataGrid>
-        <DataGrid  x:Name="TaskGrid" Margin="0,150,0.4,0.4">
+        <DataGrid  x:Name="TaskGrid" Margin="0,270,0.4,110.8">
         </DataGrid>
-        <StackPanel HorizontalAlignment="Center"  Grid.Row="1" Orientation="Horizontal">
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="45,214,32.4,250.8">
             <Button x:Name="addButton" Content="Add Tasklist" Click="addButton_Click" />
             <Button x:Name="updateButton" Content="Save changes" Click="updateButton_Click" />
-            <Button x:Name="deleteButton" Content="Delete" Click="deleteButton_Click" />
+            <Button x:Name="deleteButton" Content="Delete Selected list" Click="deleteButton_Click" Margin="20,8,20,8.4" Width="121" />
         </StackPanel>
-        <TextBox x:Name="txtId" HorizontalAlignment="Left" Height="23" Margin="468,13.6,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"/>
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="45,429,32.4,35.8">
+            <Button x:Name="addTaskBtn" Content="Add Task" Click="addTaskButton_Click" />
+            <Button x:Name="updateTaskBtn" Content="Save changes" Click="updateTaskButton_Click" />
+            <Button x:Name="deleteTaskBtn" Content="Delete Selected Task" Click="deleteTaskButton_Click" Margin="20,8,20,8.4" Width="121" />
+        </StackPanel>
     </Grid>
 </Window>
