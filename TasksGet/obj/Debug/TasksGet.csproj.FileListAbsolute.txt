@@ -1,0 +1,10 @@
+D:\Programming\c#\WPF\WebApplication1\TasksGet\bin\Debug\TasksGet.exe.config
+D:\Programming\c#\WPF\WebApplication1\TasksGet\bin\Debug\TasksGet.exe
+D:\Programming\c#\WPF\WebApplication1\TasksGet\bin\Debug\TasksGet.pdb
+D:\Programming\c#\WPF\WebApplication1\TasksGet\bin\Debug\Newtonsoft.Json.dll
+D:\Programming\c#\WPF\WebApplication1\TasksGet\bin\Debug\System.Net.Http.Formatting.dll
+D:\Programming\c#\WPF\WebApplication1\TasksGet\bin\Debug\Newtonsoft.Json.xml
+D:\Programming\c#\WPF\WebApplication1\TasksGet\bin\Debug\System.Net.Http.Formatting.xml
+D:\Programming\c#\WPF\WebApplication1\TasksGet\obj\Debug\TasksGet.exe
+D:\Programming\c#\WPF\WebApplication1\TasksGet\obj\Debug\TasksGet.pdb
+D:\Programming\c#\WPF\WebApplication1\TasksGet\obj\Debug\TasksGet.csprojResolveAssemblyReference.cache
