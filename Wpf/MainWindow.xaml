@@ -18,7 +18,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <DataGrid AutoGenerateColumns="True" x:Name="phonesGrid" Margin="0,0,0.4,314.4">
+        <DataGrid AutoGenerateColumns="True" x:Name="TaskListGrid" Margin="0,0,0.4,314.4">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
                     <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
@@ -28,9 +28,9 @@
         <DataGrid  x:Name="TaskGrid" Margin="0,270,0.4,110.8">
         </DataGrid>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="45,214,32.4,250.8">
-            <Button x:Name="addButton" Content="Add Tasklist" Click="addButton_Click" />
-            <Button x:Name="updateButton" Content="Save changes" Click="updateButton_Click" />
-            <Button x:Name="deleteButton" Content="Delete Selected list" Click="deleteButton_Click" Margin="20,8,20,8.4" Width="121" />
+            <Button x:Name="addTaskListBtn" Content="Add Tasklist" Click="addButton_Click" />
+            <Button x:Name="updateTaskListBtn" Content="Save changes" Click="updateButton_Click" />
+            <Button x:Name="deleteTaskListBtn" Content="Delete Selected list" Click="deleteButton_Click" Margin="20,8,20,8.4" Width="121" />
         </StackPanel>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="45,429,32.4,35.8">
             <Button x:Name="addTaskBtn" Content="Add Task" Click="addTaskButton_Click" />

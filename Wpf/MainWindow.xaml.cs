@@ -37,7 +37,7 @@ namespace Wpf
             HttpResponseMessage response = await client.GetAsync("api/tasklists");
             response.EnsureSuccessStatusCode(); // Throw on error code.
             var reports = await response.Content.ReadAsAsync<IEnumerable<Tasklist>>();
-            phonesGrid.ItemsSource = reports;
+            TaskListGrid.ItemsSource = reports;
         }
 
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
@@ -69,12 +69,12 @@ namespace Wpf
         {
             try
             {
-                Tasklist td = (Tasklist)phonesGrid.SelectedItem;
+                Tasklist td = (Tasklist)TaskListGrid.SelectedItem;
                 HttpResponseMessage response = await client.DeleteAsync("/api/tasklists/" + td.Id);
                 response.EnsureSuccessStatusCode(); // Throw on error code.
                 MessageBox.Show("Tasklist Successfully Deleted");
-                phonesGrid.ItemsSource = await GetAllTasklists();
-                phonesGrid.ScrollIntoView(phonesGrid.ItemContainerGenerator.Items[phonesGrid.Items.Count - 1]);
+                TaskListGrid.ItemsSource = await GetAllTasklists();
+                TaskListGrid.ScrollIntoView(TaskListGrid.ItemContainerGenerator.Items[TaskListGrid.Items.Count - 1]);
             }
             catch (Exception)
             {
