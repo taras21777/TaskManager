@@ -12,7 +12,6 @@ namespace WebApplication1.Models
         {
             DateTime hiredateBoss = new DateTime(1991, 12, 31);
             DateTime hiredateBoss1 = new DateTime(1992, 12, 31);
-            // создание и добавление моделей
             TaskStatus ts1 = new TaskStatus { Name = "Open" };
             TaskStatus ts2 = new TaskStatus { Name = "Closed" };
             db.TaskStatus.Add(ts1);
