@@ -40,21 +40,6 @@ namespace Wpf
             TaskListGrid.ItemsSource = reports;
         }
 
-        private void addTaskButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void updateTaskButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void deleteTaskButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -64,25 +49,45 @@ namespace Wpf
         {
 
         }
-        //Delete Task list 
-        private async void deleteButton_Click(object sender, RoutedEventArgs e)
+
+        private async void DeleteTaskBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Tasklist td = (Tasklist)TaskListGrid.SelectedItem;
-                HttpResponseMessage response = await client.DeleteAsync("/api/tasklists/" + td.Id);
+                SelectedTask tl = TaskGrid.SelectedItems[0] as SelectedTask;
+                HttpResponseMessage response = await client.DeleteAsync("/api/tasks/" + tl.TaskId);
                 response.EnsureSuccessStatusCode(); // Throw on error code.
-                MessageBox.Show("Tasklist Successfully Deleted");
-                TaskListGrid.ItemsSource = await GetAllTasklists();
-                TaskListGrid.ScrollIntoView(TaskListGrid.ItemContainerGenerator.Items[TaskListGrid.Items.Count - 1]);
+                MessageBox.Show("Task Successfully Deleted");
+              
+                TaskGrid.ScrollIntoView(TaskGrid.ItemContainerGenerator.Items[TaskGrid.Items.Count - 1]);
             }
             catch (Exception)
             {
-                MessageBox.Show("Tasklist Deletion Unsuccessful");
+                MessageBox.Show("Task Deletion Unsuccessful");
             }
         }
 
-        //Get all task lists from Web Api
+        private async void DeleteTaskListBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Tasklist tl = TaskListGrid.SelectedItems[0] as Tasklist;
+                
+                HttpResponseMessage response = await client.DeleteAsync("/api/tasklists/" + tl.Id);
+                response.EnsureSuccessStatusCode(); // Throw on error code.
+                MessageBox.Show("Tasklist Successfully Deleted");
+                
+                TaskListGrid.ItemsSource = await GetAllTasklists();
+                TaskListGrid.ScrollIntoView(TaskListGrid.ItemContainerGenerator.Items[TaskListGrid.Items.Count - 1]);
+                
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Tasklist Deletion Unsuccessful" + ex.ToString());
+            }
+        }
+
         public async Task<IEnumerable<Tasklist>> GetAllTasklists()
         {
             HttpResponseMessage response = await client.GetAsync("/api/tasklists");
@@ -90,8 +95,7 @@ namespace Wpf
             var tasklist = await response.Content.ReadAsAsync<IEnumerable<Tasklist>>();
             return tasklist;
         }
-
-        //Get all tasks from Web Api
+        
         public async Task<IEnumerable<Tasks>> GetAllTasks()
         {
             HttpResponseMessage response = await client.GetAsync("/api/tasks/");
@@ -100,7 +104,6 @@ namespace Wpf
             return tasks;
         }
 
-        //Get all task statuses from Web Api
         public async Task<IEnumerable<TaskStatuses>> GetAllTaskStatusess()
         {
             HttpResponseMessage response = await client.GetAsync("/api/taskstatus/");
@@ -109,19 +112,77 @@ namespace Wpf
             return taskstatus;
         }
 
-        //show all tasks from selected task list
         private async void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridRow td = sender as DataGridRow;
             Tasklist tl = td.Item as Tasklist;
-            var task = await GetAllTasks();
+            List<Tasks> task = await GetAllTasks() as List<Tasks>;
+            // MessageBox.Show(task.ToString());
             var taskstatus = await GetAllTaskStatusess();
             var SelectTask = from t in task
                              join ts in taskstatus on t.TaskStatusId equals ts.TaskStatusId
                              where t.TaskListId == tl.Id
-                             select new { Name = t.Name, Status = ts.Name };
+                             select  new SelectedTask { TaskId = t.TaskId, Name = t.Name, Status = ts.Name };
+           
+           
             TaskGrid.ItemsSource = SelectTask;
         }
-     
+
+        private void Row_Click(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow td = sender as DataGridRow;
+            SelectedTask tl = td.Item as SelectedTask;
+            StatusCmbB.Items.Clear();
+            StatusCmbB.Items.Add("Open");
+            StatusCmbB.Items.Add("Closed");
+            NametxtB.Text = tl.Name;
+            switch (tl.Status)
+            {
+                case "Open":
+                    {
+                        StatusCmbB.SelectedIndex = 0;
+                        break;
+                    }
+                case "Closed":
+                    {
+                        StatusCmbB.SelectedIndex = 1;
+                        break;
+                    }
+            }
+
+        }
+
+        private async void SaveBtn_Click(object sender, RoutedEventArgs e)
+        {
+           
+            try
+            {
+                SelectedTask tl = TaskGrid.SelectedItems[0] as SelectedTask;
+                tl.Name = NametxtB.Text;
+                tl.Status = StatusCmbB.SelectedItem.ToString();
+                HttpResponseMessage response = await client.GetAsync("/api/tasks/"+tl.TaskId);
+                Tasks tasks = await response.Content.ReadAsAsync<Tasks>();
+                tasks.Name = NametxtB.Text;
+                switch(StatusCmbB.SelectedItem.ToString())
+                {
+                    case "Open":
+                        {
+                            tasks.TaskStatusId = 1;
+                            break;
+                        }
+                    case "Closed":
+                        {
+                            tasks.TaskStatusId = 2;
+                            break;
+                        }
+                }
+                HttpResponseMessage response1 = await client.PutAsJsonAsync("/api/tasks/"+tasks.TaskId,tasks);
+                response1.EnsureSuccessStatusCode(); // Throw on error code.
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Task Edit Unsuccessful");
+            }
+        }
     }
 }
