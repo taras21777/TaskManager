@@ -21,33 +21,58 @@ using WPFmvvm.Model;
 
 namespace WPFmvvm.ViewModel
 {
-    public class TaskVM : INotifyPropertyChanged
+    public class TaskVM : ViewModelBase
     {
-        HttpClient client = new HttpClient();
+        
         public TaskVM()
         {
-            client.BaseAddress = new Uri("http://localhost:41447/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-          
-            var TaskLists = GetAllTasklists();
-            //???????????????????????????????????????????????????????????????????????????????????
-           
+            Start();
         }
 
-        public async Task<IEnumerable<TaskList>> GetAllTasklists()
+
+        public async void Start()
         {
-            HttpResponseMessage response = await client.GetAsync("/api/tasklists");
-            response.EnsureSuccessStatusCode(); // Throw on error code.
-            var tasklist = await response.Content.ReadAsAsync<IEnumerable<TaskList>>();
-            return tasklist;
+            TaskList t = new TaskList();
+            var reports = await t.GetAll();
+            ObservableCollection<TaskList> Tasklists = new ObservableCollection<TaskList>(reports);
+            Tasklist = new ObservableCollection<TaskListViewModel>(Tasklists.Select(taskl => new TaskListViewModel(taskl)));
+
+            Tasks t1 = new Tasks();
+            var reports1 = await t1.GetAll();
+            ObservableCollection<Tasks> tasks = new ObservableCollection<Tasks>(reports1);
+            task1 = new ObservableCollection<TasksViewModel>(tasks.Select(tasks1 => new TasksViewModel(tasks1)));
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
+
+        public ObservableCollection<TasksViewModel> Task1;
+
+        public ObservableCollection<TasksViewModel> task1
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            get
+            { 
+                return Task1;
+            }
+            set
+            {
+                Task1 = value;
+                OnPropertyChanged("task1");
+            }
         }
+
+
+
+        public ObservableCollection<TaskListViewModel> Tasklist1;
+
+        public ObservableCollection<TaskListViewModel> Tasklist
+        {
+            get { return Tasklist1; }
+            set
+            {
+                Tasklist1 = value;
+                OnPropertyChanged("Tasklist");
+            }
+        }
+
     }
 }
+

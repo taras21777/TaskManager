@@ -5,19 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFmvvm"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="441.2" Width="753.2">
     <Grid>
-        <DataGrid x:Name="TaskListGrid" ItemsSource="{Binding TaskLists}" AutoGenerateColumns="False"  IsReadOnly="True" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="250" Width="330">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="0.5*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <DataGrid x:Name="TaskListGrid" Grid.Column="0" Grid.Row="0" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Tasklist}" AutoGenerateColumns="False"  IsReadOnly="True" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="186" Width="478">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name , UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="*"/>
-                <DataGridTextColumn Binding="{Binding CreateDate , UpdateSourceTrigger=PropertyChanged}" Header="Create Date" Width="*"/>
-                <DataGridTextColumn Binding="{Binding DueDate ,  UpdateSourceTrigger=PropertyChanged}" Header="Due date" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Name }" Header="Name" Width="*"/>
+                <DataGridTextColumn Binding="{Binding CreateDate }" Header="Create Date" Width="*"/>
+                <DataGridTextColumn Binding="{Binding DueDate}" Header="Due date" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="AddTasklistBtn" IsEnabled="False" Content="Add task list" HorizontalAlignment="Left" Margin="35,280,0,0" VerticalAlignment="Top" Width="440" Height="31"/>
-        <Label x:Name="label" Content="Change Name" HorizontalAlignment="Left" Margin="360,24,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Nametxt" HorizontalAlignment="Left" Height="23" Margin="360,54,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="SaveChangesBtn" IsEnabled="False" Content="Save" HorizontalAlignment="Left" Margin="380,82,0,0" VerticalAlignment="Top" Width="75" Height="23"/>
+        <StackPanel Grid.Column="1" Grid.Row="0" DataContext="{Binding SelectedTasklist}">
+            <TextBlock Text="Selected task list"  />
+            <TextBlock Text="Name" />
+            <TextBox Text="{Binding SelectedItem.Name, ElementName=TaskListGrid, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <DataGrid x:Name="TaskGrid" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding task1}" AutoGenerateColumns="False"  IsReadOnly="True" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="186" Width="478">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="*"/>
+                
+            </DataGrid.Columns>
+        </DataGrid>
+
 
     </Grid>
 </Window>

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Programming\c#\WPF\WebApplication1\Wpf\obj\Debug\
+D:\Programming\c#\WPF\TaskManager\Wpf\obj\Debug\
 Wpf
 none
 false
 DEBUG;TRACE
-D:\Programming\c#\WPF\WebApplication1\Wpf\App.xaml
+D:\Programming\c#\WPF\TaskManager\Wpf\App.xaml
 11151548125
 
 13280892683
-181229770997
+181464607787
 MainWindow.xaml;
 
-False
+True
 

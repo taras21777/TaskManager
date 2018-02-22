@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -37,7 +38,8 @@ namespace Wpf
             HttpResponseMessage response = await client.GetAsync("api/tasklists");
             response.EnsureSuccessStatusCode(); // Throw on error code.
             var reports = await response.Content.ReadAsAsync<IEnumerable<Tasklist>>();
-            TaskListGrid.ItemsSource = reports;
+            ObservableCollection<Tasklist> myObservableCollection = new ObservableCollection<Tasklist>(reports);
+            TaskListGrid.ItemsSource = myObservableCollection;
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)

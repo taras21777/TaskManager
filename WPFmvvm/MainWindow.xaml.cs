@@ -24,7 +24,7 @@ namespace WPFmvvm
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new TaskVM();
+           
         }
     }
 }

@@ -2,63 +2,45 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace WPFmvvm.Model
 {
-    public class TaskList : INotifyPropertyChanged
+    public class TaskList : HttpRepository<TaskList>
     {
-        private int id;
-        private string name;
-        private DateTime createdate;
-        private DateTime duedate;
-      
-        public DateTime CreateDate
+
+
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime DueDate { get; set; }
+
+        public TaskList(int id, string name, DateTime create, DateTime due)
         {
-            get { return createdate; }
-            set
-            {
-                createdate =value;
-                OnPropertyChanged("CreateDate");
-            }
-        }
-        public DateTime DueDate
-        {
-            get { return duedate; }
-            set
-            {
-                duedate = value;
-                OnPropertyChanged("DueDate");
-            }
+            this.Id = id;
+            this.Name = name;
+            this.CreateDate = create;
+            this.DueDate = due;
         }
 
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                name = value;
-                OnPropertyChanged("Name");
-            }
-        }
+        public TaskList() { }
 
-        public int Id
-        {
-            get { return id; }
-            set
-            {
-                id = value;
-                OnPropertyChanged("Id");
-            }
-        }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        HttpClient client = new HttpClient();
+       
+
+       
+        public override async Task<IEnumerable<TaskList>> GetAll()
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            HttpResponseMessage response = await client.GetAsync("http://localhost:41447/api/tasklists");
+          
+            response.EnsureSuccessStatusCode(); // Throw on error code.
+            var tasklist = await response.Content.ReadAsAsync<IEnumerable<TaskList>>();
+            return tasklist;
         }
     }
 }
