@@ -42,9 +42,22 @@ namespace Wpf
             TaskListGrid.ItemsSource = myObservableCollection;
         }
 
-        private void addButton_Click(object sender, RoutedEventArgs e)
+        private async void addButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                Tasklist t = new Tasklist();
+                t.Id = 3;
+                t.Name = "newTasklist";
+                t.CreateDate = DateTime.Now;
+                t.DueDate = DateTime.Now.AddHours(25);
+                HttpResponseMessage r = await client.PostAsJsonAsync("http://localhost:41447/api/tasklists", t);
+                r.EnsureSuccessStatusCode();
+            }
+           catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void updateButton_Click(object sender, RoutedEventArgs e)

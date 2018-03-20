@@ -26,5 +26,7 @@ namespace WPFmvvm
             InitializeComponent();
            
         }
+
+       
     }
 }

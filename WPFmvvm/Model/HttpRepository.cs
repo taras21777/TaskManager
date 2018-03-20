@@ -9,6 +9,7 @@ namespace WPFmvvm.Model
     public abstract class HttpRepository<T> : ICRUD<T>
     {
         public abstract Task<IEnumerable<T>> GetAll();
-       
+        public abstract void AddNew(T t);
+        public abstract void DeleteSelected(T t);
     }
 }

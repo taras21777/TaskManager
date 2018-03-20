@@ -31,7 +31,7 @@
             </DataGrid.ItemContainerStyle>
         </DataGrid>
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,156,0,255.4" Width="323">
-            <Button x:Name="addButton1" IsEnabled="False" Content="Add Task list" Click="addButton_Click" Margin="20,11,20,10.2" Width="105" />
+            <Button x:Name="addButton1" Content="Add Task list" Click="addButton_Click" Margin="20,11,20,10.2" Width="105" />
             <Button x:Name="deleteButton1" Content="Delete Task list" Click="DeleteTaskListBtn_Click" Margin="20,11,20,10.2" Width="105" />
         </StackPanel>
         <DataGrid AutoGenerateColumns="False"  IsReadOnly="True" x:Name="TaskGrid" Margin="0,212,213.8,10.4">

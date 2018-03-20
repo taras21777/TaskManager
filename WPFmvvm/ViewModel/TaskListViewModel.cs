@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,20 @@ namespace WPFmvvm.ViewModel
         public TaskListViewModel(TaskList tasklist)
         {
             this.Tasklist = tasklist;
-           
+            
+        }
+        public TaskList GetTaskList
+        {
+            get { return Tasklist; }
+        }
+
+        public ObservableCollection<Tasks> TaskListID
+        {
+            get { return Tasklist.TaskListID; }
+            set {
+                Tasklist.TaskListID = value;
+                OnPropertyChanged("TaskListAdd");
+            }
         }
 
         public DateTime CreateDate
@@ -55,6 +69,9 @@ namespace WPFmvvm.ViewModel
                 OnPropertyChanged("Id");
             }
         }
+
+       
+
 
 
     }

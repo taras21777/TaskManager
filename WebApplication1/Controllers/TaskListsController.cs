@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebApplication1.Models;
 
+
 namespace WebApplication1.Controllers
 {
     public class TaskListsController : ApiController
@@ -29,8 +30,15 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public void CreateTaskList([FromBody]TaskList tasklist)
         {
-            db.TaskLists.Add(tasklist);
-            db.SaveChanges();
+            try
+            {
+                db.TaskLists.Add(tasklist);
+                db.SaveChanges();
+            }
+                catch (Exception ex)
+            {
+                string k = ex.Message;
+            }
         }
 
         [HttpPut]

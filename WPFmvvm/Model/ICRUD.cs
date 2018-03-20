@@ -9,5 +9,7 @@ namespace WPFmvvm.Model
     interface ICRUD<T>
     {
         Task<IEnumerable<T>> GetAll();
+        void AddNew(T t);
+        void DeleteSelected(T t);
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using WPFmvvm.Model;
 
 namespace WPFmvvm.ViewModel
@@ -14,11 +16,14 @@ namespace WPFmvvm.ViewModel
 
         public TasksViewModel(Tasks tasks)
         {
-
             this.Task1 = tasks;
-
+            
         }
 
+        public Tasks GetTask
+        {
+            get { return Task1; }
+        }
 
         public string Name
         {
@@ -49,6 +54,18 @@ namespace WPFmvvm.ViewModel
                 OnPropertyChanged("Id");
             }
         }
+
+        private Tasks selectedTask;
+        public Tasks SelectedTask
+        {
+            get { return selectedTask; }
+            set
+            {
+                selectedTask = value;
+                OnPropertyChanged("SelectedTask");
+            }
+        }
+
 
         public int TaskListId
         {

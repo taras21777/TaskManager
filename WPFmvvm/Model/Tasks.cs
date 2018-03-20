@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace WPFmvvm.Model
 {
@@ -23,6 +24,13 @@ namespace WPFmvvm.Model
             this.TaskListId = tlid;
         }
 
+        public Tasks(string name, int stid, int tlid)
+        {
+            this.Name = name;
+            this.TaskStatusId = stid;
+            this.TaskListId = tlid;
+        }
+
         HttpClient client = new HttpClient();
 
 
@@ -33,6 +41,27 @@ namespace WPFmvvm.Model
             response.EnsureSuccessStatusCode(); // Throw on error code.
             var tasks = await response.Content.ReadAsAsync<IEnumerable<Tasks>>();
             return tasks;
+        }
+
+        public  override async void AddNew(Tasks t)
+        {
+            HttpResponseMessage r = await client.PostAsJsonAsync("http://localhost:41447/api/tasks/", t);
+            r.EnsureSuccessStatusCode();
+        }
+
+        public override async void DeleteSelected(Tasks t)
+        {
+            try
+            {
+               
+                HttpResponseMessage response = await client.DeleteAsync("http://localhost:41447/api/tasks/" + t.TaskId);
+                response.EnsureSuccessStatusCode(); // Throw on error code.
+                MessageBox.Show("Task Successfully Deleted");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Task Deletion Unsuccessful");
+            }
         }
     }
 }

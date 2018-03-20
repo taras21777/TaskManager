@@ -70,7 +70,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\HttpRepository.cs" />
     <Compile Include="Model\ICRUD.cs" />
-    <Compile Include="RellayCommand.cs" />
+    <Compile Include="RellayCommand1.cs" />
     <Compile Include="ViewModel\TaskListViewModel.cs" />
     <Compile Include="ViewModel\TasksViewModel.cs" />
     <Compile Include="ViewModel\TaskVM.cs" />
@@ -109,7 +109,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="ViewModel\packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
